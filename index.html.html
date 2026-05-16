@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CreatorPay AI — Transforme ton audience en revenus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --black:#060606;
+    --white:#F5F0E8;
+    --accent:#C8F135;
+    --accent-dim:#9BBF1F;
+    --muted:#9E9B94;
+    --card-bg:#111110;
+    --border:#222220;
+    --red:#FF4545;
+  }
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--black);
+    color:var(--white);
+    font-family:'DM Sans',sans-serif;
+    font-size:17px;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+
+  /* NAV */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:20px 48px;
+    border-bottom:1px solid transparent;
+    transition:border-color .3s,background .3s;
+  }
+  nav.scrolled{background:rgba(6,6,6,.92);border-color:var(--border);backdrop-filter:blur(12px)}
+  .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:20px;letter-spacing:-.5px;color:var(--white);text-decoration:none}
+  .logo span{color:var(--accent)}
+  .nav-cta{
+    background:var(--accent);color:var(--black);
+    font-family:'DM Sans',sans-serif;font-weight:500;font-size:14px;
+    padding:10px 22px;border-radius:100px;border:none;cursor:pointer;
+    text-decoration:none;
+    transition:transform .2s,background .2s;
+  }
+  .nav-cta:hover{transform:scale(1.04);background:#d4ff44}
+
+  /* HERO */
+  .hero{
+    min-height:100vh;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:140px 24px 80px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:'';position:absolute;
+    width:700px;height:700px;
+    background:radial-gradient(circle,rgba(200,241,53,.12) 0%,transparent 70%);
+    top:50%;left:50%;transform:translate(-50%,-60%);
+    pointer-events:none;
+  }
+  .hero-badge{
+    display:inline-flex;align-items:center;gap:8px;
+    border:1px solid var(--border);
+    border-radius:100px;padding:7px 16px;
+    font-size:13px;color:var(--muted);
+    margin-bottom:36px;
+    animation:fadeUp .7s ease both;
+  }
+  .hero-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+  .hero h1{
+    font-family:'Syne',sans-serif;
+    font-weight:800;
+    font-size:clamp(48px,8vw,96px);
+    line-height:1.0;
+    letter-spacing:-3px;
+    max-width:900px;
+    margin:0 auto 28px;
+    animation:fadeUp .7s .1s ease both;
+  }
+  .hero h1 em{font-style:normal;color:var(--accent)}
+  .hero p{
+    font-size:clamp(17px,2vw,21px);
+    color:var(--muted);
+    max-width:540px;
+    margin:0 auto 48px;
+    font-weight:300;
+    line-height:1.7;
+    animation:fadeUp .7s .2s ease both;
+  }
+  .waitlist-form{
+    display:flex;gap:0;
+    max-width:460px;width:100%;margin:0 auto;
+    border:1px solid var(--border);
+    border-radius:100px;
+    overflow:hidden;
+    background:var(--card-bg);
+    animation:fadeUp .7s .3s ease both;
+    transition:border-color .3s;
+  }
+  .waitlist-form:focus-within{border-color:var(--accent)}
+  .waitlist-form input{
+    flex:1;background:transparent;
+    border:none;outline:none;
+    padding:16px 24px;
+    font-family:'DM Sans',sans-serif;
+    font-size:15px;color:var(--white);
+  }
+  .waitlist-form input::placeholder{color:var(--muted)}
+  .waitlist-form button{
+    background:var(--accent);color:var(--black);
+    border:none;cursor:pointer;
+    font-family:'DM Sans',sans-serif;font-weight:500;font-size:15px;
+    padding:0 28px;
+    border-radius:0;
+    transition:background .2s;
+    white-space:nowrap;
+  }
+  .waitlist-form button:hover{background:#d4ff44}
+  .hero-note{font-size:13px;color:var(--muted);margin-top:16px;animation:fadeUp .7s .4s ease both}
+
+  /* SOCIAL PROOF TICKER */
+  .ticker{
+    border-top:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+    padding:14px 0;
+    overflow:hidden;
+    position:relative;
+  }
+  .ticker-track{
+    display:flex;gap:64px;
+    width:max-content;
+    animation:ticker 22s linear infinite;
+  }
+  .ticker-item{
+    display:flex;align-items:center;gap:12px;
+    font-size:14px;color:var(--muted);
+    white-space:nowrap;flex-shrink:0;
+  }
+  .ticker-item span{color:var(--white);font-weight:500}
+  .ticker-sep{color:var(--border)}
+  @keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* STATS */
+  .stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1px;
+    background:var(--border);
+    border-top:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+    margin:80px 0;
+  }
+  .stat{
+    background:var(--black);
+    padding:56px 48px;
+    text-align:center;
+  }
+  .stat-num{
+    font-family:'Syne',sans-serif;
+    font-weight:800;
+    font-size:clamp(40px,5vw,64px);
+    color:var(--accent);
+    letter-spacing:-2px;
+    display:block;
+    margin-bottom:8px;
+  }
+  .stat-label{font-size:15px;color:var(--muted)}
+
+  /* SECTION TITLES */
+  section{padding:100px 48px}
+  .section-tag{
+    display:inline-block;
+    font-size:12px;letter-spacing:2px;text-transform:uppercase;
+    color:var(--accent);font-weight:500;
+    margin-bottom:20px;
+  }
+  .section-title{
+    font-family:'Syne',sans-serif;
+    font-weight:800;
+    font-size:clamp(36px,4vw,54px);
+    letter-spacing:-1.5px;
+    line-height:1.1;
+    max-width:600px;
+    margin-bottom:16px;
+  }
+  .section-sub{font-size:18px;color:var(--muted);font-weight:300;max-width:480px;margin-bottom:64px}
+
+  /* PROBLEM SECTION */
+  .problem{max-width:1200px;margin:0 auto}
+  .problem-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:2px;
+    background:var(--border);
+    border:1px solid var(--border);
+    border-radius:24px;overflow:hidden;
+  }
+  .problem-card{
+    background:var(--black);
+    padding:48px;
+  }
+  .problem-card.before{background:var(--card-bg)}
+  .p-label{
+    font-size:12px;letter-spacing:2px;text-transform:uppercase;
+    font-weight:500;margin-bottom:32px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .p-label.bad{color:var(--red)}
+  .p-label.good{color:var(--accent)}
+  .p-label::before{
+    content:'';display:inline-block;
+    width:8px;height:8px;border-radius:50%;
+    background:currentColor;
+  }
+  .problem-item{
+    display:flex;align-items:flex-start;gap:16px;
+    margin-bottom:24px;
+  }
+  .problem-item .icon{
+    width:32px;height:32px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:16px;flex-shrink:0;margin-top:2px;
+  }
+  .icon.bad{background:rgba(255,69,69,.12);color:var(--red)}
+  .icon.good{background:rgba(200,241,53,.12);color:var(--accent)}
+  .problem-item p{font-size:15px;color:var(--muted);line-height:1.6}
+  .problem-item p strong{color:var(--white);font-weight:500}
+
+  /* HOW IT WORKS */
+  .how{max-width:1200px;margin:0 auto}
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--border);border:1px solid var(--border);border-radius:24px;overflow:hidden}
+  .step{
+    background:var(--black);
+    padding:40px 32px;
+    position:relative;
+  }
+  .step-num{
+    font-family:'Syne',sans-serif;font-weight:800;
+    font-size:72px;color:var(--border);
+    line-height:1;margin-bottom:20px;
+  }
+  .step h3{font-family:'Syne',sans-serif;font-weight:700;font-size:20px;margin-bottom:12px;letter-spacing:-.3px}
+  .step p{font-size:14px;color:var(--muted);line-height:1.65}
+
+  /* FEATURES */
+  .features{max-width:1200px;margin:0 auto}
+  .features-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  .feature-card{
+    background:var(--card-bg);
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:48px;
+    transition:border-color .3s,transform .3s;
+  }
+  .feature-card:hover{border-color:rgba(200,241,53,.3);transform:translateY(-4px)}
+  .feature-card.featured{
+    grid-column:1/-1;
+    display:grid;grid-template-columns:1fr 1fr;gap:48px;
+    align-items:center;
+    background:linear-gradient(135deg,var(--card-bg) 0%,#141410 100%);
+    border-color:rgba(200,241,53,.2);
+  }
+  .feature-icon{
+    width:48px;height:48px;
+    border-radius:12px;
+    background:rgba(200,241,53,.1);
+    display:flex;align-items:center;justify-content:center;
+    font-size:24px;margin-bottom:24px;
+  }
+  .feature-card h3{font-family:'Syne',sans-serif;font-weight:700;font-size:22px;letter-spacing:-.3px;margin-bottom:12px}
+  .feature-card p{font-size:15px;color:var(--muted);line-height:1.7}
+  .feature-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+  .tag{
+    font-size:12px;padding:5px 12px;border-radius:100px;
+    background:rgba(200,241,53,.08);color:var(--accent);
+    border:1px solid rgba(200,241,53,.15);font-weight:500;
+  }
+
+  /* MOCK PREVIEW */
+  .mock-preview{
+    background:var(--black);
+    border:1px solid var(--border);
+    border-radius:16px;
+    overflow:hidden;
+  }
+  .mock-bar{
+    display:flex;gap:6px;padding:12px 16px;
+    background:#0d0d0c;border-bottom:1px solid var(--border);
+  }
+  .mock-dot{width:10px;height:10px;border-radius:50%}
+  .mock-content{padding:24px}
+  .mock-row{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:10px 0;border-bottom:1px solid var(--border);
+    font-size:13px;
+  }
+  .mock-row:last-child{border-bottom:none}
+  .mock-label{color:var(--muted)}
+  .mock-val{font-weight:500}
+  .mock-val.green{color:var(--accent)}
+  .mock-val.muted{color:var(--muted)}
+  .mock-progress{
+    height:4px;background:var(--border);border-radius:2px;
+    margin-top:16px;overflow:hidden;
+  }
+  .mock-progress-bar{height:100%;background:var(--accent);border-radius:2px;animation:grow 2s 1s ease both}
+  @keyframes grow{from{width:0}to{width:var(--w)}}
+
+  /* TESTIMONIALS */
+  .testimonials{max-width:1200px;margin:0 auto;overflow:hidden}
+  .testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .testi-card{
+    background:var(--card-bg);border:1px solid var(--border);
+    border-radius:20px;padding:32px;
+  }
+  .testi-stars{color:var(--accent);font-size:14px;letter-spacing:2px;margin-bottom:16px}
+  .testi-card blockquote{font-size:15px;color:var(--muted);line-height:1.7;font-style:italic;margin-bottom:24px}
+  .testi-card blockquote em{font-style:normal;color:var(--white)}
+  .testi-author{display:flex;align-items:center;gap:12px}
+  .testi-avatar{
+    width:40px;height:40px;border-radius:50%;
+    background:rgba(200,241,53,.15);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:600;font-size:14px;color:var(--accent);flex-shrink:0;
+  }
+  .testi-name{font-size:14px;font-weight:500}
+  .testi-meta{font-size:13px;color:var(--muted)}
+
+  /* PRICING */
+  .pricing-wrap{max-width:900px;margin:0 auto}
+  .pricing-toggle{
+    display:flex;align-items:center;gap:12px;
+    background:var(--card-bg);border:1px solid var(--border);
+    border-radius:100px;padding:4px;margin:0 auto 48px;
+    width:fit-content;
+  }
+  .pricing-toggle button{
+    padding:10px 24px;border-radius:100px;border:none;cursor:pointer;
+    font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;
+    background:transparent;color:var(--muted);
+    transition:all .2s;
+  }
+  .pricing-toggle button.active{background:var(--accent);color:var(--black)}
+  .badge-save{
+    background:rgba(200,241,53,.15);color:var(--accent);
+    font-size:11px;font-weight:500;padding:3px 8px;border-radius:100px;
+    margin-left:-4px;
+  }
+  .pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  .price-card{
+    background:var(--card-bg);border:1px solid var(--border);
+    border-radius:24px;padding:48px;
+    transition:transform .3s;
+  }
+  .price-card:hover{transform:translateY(-4px)}
+  .price-card.pro{
+    background:#0f0f0c;
+    border-color:rgba(200,241,53,.3);
+    position:relative;
+    overflow:hidden;
+  }
+  .price-card.pro::before{
+    content:'';position:absolute;top:-1px;left:0;right:0;height:2px;
+    background:var(--accent);
+  }
+  .pro-badge{
+    display:inline-block;
+    background:var(--accent);color:var(--black);
+    font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+    padding:4px 12px;border-radius:100px;margin-bottom:24px;
+  }
+  .price-name{font-family:'Syne',sans-serif;font-weight:800;font-size:24px;margin-bottom:8px}
+  .price-amount{
+    font-family:'Syne',sans-serif;font-weight:800;
+    font-size:54px;letter-spacing:-2px;
+    color:var(--white);margin-bottom:4px;
+    display:flex;align-items:baseline;gap:4px;
+  }
+  .price-amount sup{font-size:22px;margin-bottom:8px}
+  .price-amount small{font-family:'DM Sans',sans-serif;font-weight:300;font-size:16px;color:var(--muted)}
+  .price-desc{font-size:14px;color:var(--muted);margin-bottom:32px}
+  .price-features{list-style:none;margin-bottom:40px}
+  .price-features li{
+    display:flex;align-items:center;gap:12px;
+    font-size:15px;padding:10px 0;
+    border-bottom:1px solid var(--border);
+  }
+  .price-features li:last-child{border-bottom:none}
+  .price-features li .check{
+    width:20px;height:20px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-size:11px;flex-shrink:0;
+  }
+  .check.yes{background:rgba(200,241,53,.15);color:var(--accent)}
+  .check.no{background:var(--border);color:var(--muted)}
+  .price-btn{
+    width:100%;padding:16px;border-radius:100px;
+    font-family:'DM Sans',sans-serif;font-weight:500;font-size:16px;
+    cursor:pointer;border:1px solid var(--border);
+    transition:all .2s;
+    background:transparent;color:var(--white);
+  }
+  .price-btn:hover{border-color:var(--white)}
+  .price-btn.pro-btn{background:var(--accent);color:var(--black);border-color:var(--accent)}
+  .price-btn.pro-btn:hover{background:#d4ff44}
+
+  /* FAQ */
+  .faq-wrap{max-width:720px;margin:0 auto}
+  .faq-item{border-bottom:1px solid var(--border);padding:28px 0;cursor:pointer}
+  .faq-q{
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:'Syne',sans-serif;font-weight:600;font-size:18px;
+    gap:24px;
+  }
+  .faq-q .ico{
+    width:32px;height:32px;border-radius:50%;
+    border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;
+    font-size:20px;font-weight:300;color:var(--muted);
+    flex-shrink:0;transition:all .3s;
+  }
+  .faq-item.open .ico{transform:rotate(45deg);border-color:var(--accent);color:var(--accent)}
+  .faq-a{
+    font-size:15px;color:var(--muted);line-height:1.7;
+    max-height:0;overflow:hidden;
+    transition:max-height .4s ease,padding .3s;
+  }
+  .faq-item.open .faq-a{max-height:200px;padding-top:16px}
+
+  /* FINAL CTA */
+  .cta-section{
+    text-align:center;padding:140px 24px;
+    position:relative;overflow:hidden;
+    max-width:100%;
+  }
+  .cta-section::before{
+    content:'';position:absolute;
+    width:900px;height:900px;
+    background:radial-gradient(circle,rgba(200,241,53,.08) 0%,transparent 70%);
+    top:50%;left:50%;transform:translate(-50%,-50%);
+    pointer-events:none;
+  }
+  .cta-section h2{
+    font-family:'Syne',sans-serif;
+    font-weight:800;
+    font-size:clamp(44px,7vw,88px);
+    letter-spacing:-3px;
+    line-height:1.0;
+    margin-bottom:28px;
+  }
+  .cta-section h2 em{font-style:normal;color:var(--accent)}
+  .cta-section p{font-size:19px;color:var(--muted);font-weight:300;margin-bottom:48px;max-width:440px;margin-left:auto;margin-right:auto}
+  .cta-big{
+    display:inline-block;
+    background:var(--accent);color:var(--black);
+    font-family:'DM Sans',sans-serif;font-weight:600;font-size:18px;
+    padding:20px 52px;border-radius:100px;
+    text-decoration:none;border:none;cursor:pointer;
+    transition:transform .2s,background .2s;
+  }
+  .cta-big:hover{transform:scale(1.04);background:#d4ff44}
+
+  /* FOOTER */
+  footer{
+    border-top:1px solid var(--border);
+    padding:32px 48px;
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  footer .logo{font-size:17px}
+  footer p{font-size:13px;color:var(--muted)}
+
+  /* ANIMATIONS */
+  @keyframes fadeUp{
+    from{opacity:0;transform:translateY(24px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+  .reveal{opacity:0;transform:translateY(32px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.visible{opacity:1;transform:none}
+
+  /* MOBILE */
+  @media(max-width:768px){
+    nav{padding:16px 20px}
+    section{padding:72px 20px}
+    .stats{grid-template-columns:1fr}
+    .problem-grid{grid-template-columns:1fr}
+    .steps{grid-template-columns:1fr 1fr}
+    .features-grid{grid-template-columns:1fr}
+    .feature-card.featured{grid-column:auto;grid-template-columns:1fr}
+    .testi-grid{grid-template-columns:1fr}
+    .pricing-grid{grid-template-columns:1fr}
+    .waitlist-form{border-radius:16px;flex-direction:column}
+    .waitlist-form button{border-radius:12px;padding:14px}
+    footer{flex-direction:column;gap:16px;text-align:center}
+  }
+
+  /* SUCCESS STATE */
+  .success-msg{
+    display:none;
+    align-items:center;gap:10px;
+    font-size:15px;color:var(--accent);
+    animation:fadeUp .5s ease;
+  }
+  .success-msg.show{display:flex}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="logo">Creator<span>Pay</span></a>
+  <a href="#waitlist" class="nav-cta">Rejoindre la waitlist</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-badge">
+    <span class="dot"></span>
+    Beta access — places limitées
+  </div>
+  <h1>Ton audience TikTok<br/>mérite d'être<br/><em>payée.</em></h1>
+  <p>CreatorPay AI analyse ton profil, identifie tes leviers de revenus cachés et génère tout ce dont tu as besoin pour monétiser — en 60 secondes.</p>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:16px;width:100%;max-width:460px">
+    <div class="waitlist-form" id="waitlist">
+      <input type="email" id="emailInput" placeholder="ton@email.com" autocomplete="email"/>
+      <button onclick="handleWaitlist()">Rejoindre →</button>
+    </div>
+    <div class="success-msg" id="successMsg">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="9" fill="rgba(200,241,53,.2)"/><path d="M5.5 9l2.5 2.5L12.5 6" stroke="#C8F135" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Parfait ! On t'envoie ton accès beta en premier.
+    </div>
+  </div>
+  <div id="waitlistError" style="display:none;font-size:13px;color:#FF4545;margin-top:4px;animation:fadeUp .3s ease">Cet email est déjà inscrit ou invalide. Réessaie.</div>
+  <p class="hero-note">Gratuit pour toujours · Pas de carte bancaire · Annulation en 1 clic</p>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track" id="ticker">
+    <div class="ticker-item"><span>Brand Deal généré</span> · $1,200 / mois</div>
+    <div class="ticker-item"><span>@mia.creates</span> · premier media kit en 2 min</div>
+    <div class="ticker-item"><span>Audit profil</span> · score 74/100</div>
+    <div class="ticker-item"><span>@lucas.fit</span> · 3 offres UGC trouvées</div>
+    <div class="ticker-item"><span>Revenue Blueprint</span> · $3,400 potentiel/mois</div>
+    <div class="ticker-item"><span>@sophiexbakes</span> · 12 marques contactées</div>
+    <div class="ticker-item"><span>Media Kit</span> · téléchargé 847 fois</div>
+    <div class="ticker-item ticker-sep">✦</div>
+    <div class="ticker-item"><span>Brand Deal généré</span> · $1,200 / mois</div>
+    <div class="ticker-item"><span>@mia.creates</span> · premier media kit en 2 min</div>
+    <div class="ticker-item"><span>Audit profil</span> · score 74/100</div>
+    <div class="ticker-item"><span>@lucas.fit</span> · 3 offres UGC trouvées</div>
+    <div class="ticker-item"><span>Revenue Blueprint</span> · $3,400 potentiel/mois</div>
+    <div class="ticker-item"><span>@sophiexbakes</span> · 12 marques contactées</div>
+    <div class="ticker-item"><span>Media Kit</span> · téléchargé 847 fois</div>
+    <div class="ticker-item ticker-sep">✦</div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats reveal">
+  <div class="stat">
+    <span class="stat-num">50M+</span>
+    <span class="stat-label">créateurs TikTok éligibles</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">$0</span>
+    <span class="stat-label">monétisé sans outil adapté</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">60s</span>
+    <span class="stat-label">pour ton premier revenue plan</span>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section>
+  <div class="problem">
+    <div class="reveal">
+      <span class="section-tag">Le problème</span>
+      <h2 class="section-title">Tu crées. Tu postes. Tu attends.</h2>
+      <p class="section-sub">La plupart des créateurs laissent des milliers d'euros sur la table chaque mois — faute de structure, pas de talent.</p>
+    </div>
+    <div class="problem-grid reveal">
+      <div class="problem-card before">
+        <div class="p-label bad">Sans CreatorPay</div>
+        <div class="problem-item">
+          <div class="icon bad">✕</div>
+          <p><strong>Pas de media kit</strong> — les marques ne rappellent jamais faute d'un dossier professionnel</p>
+        </div>
+        <div class="problem-item">
+          <div class="icon bad">✕</div>
+          <p><strong>Aucune stratégie</strong> — tu ne sais pas quels revenus sont réalistes avec ton profil</p>
+        </div>
+        <div class="problem-item">
+          <div class="icon bad">✕</div>
+          <p><strong>Prospection à l'aveugle</strong> — tes DMs de collab restent sans réponse</p>
+        </div>
+        <div class="problem-item">
+          <div class="icon bad">✕</div>
+          <p><strong>TikTok funds insuffisants</strong> — tu dépends d'un seul flux de revenus capricieux</p>
+        </div>
+      </div>
+      <div class="problem-card">
+        <div class="p-label good">Avec CreatorPay</div>
+        <div class="problem-item">
+          <div class="icon good">✓</div>
+          <p><strong>Media kit en 2 clics</strong> — PDF professionnel avec stats, niche, audience, tarifs</p>
+        </div>
+        <div class="problem-item">
+          <div class="icon good">✓</div>
+          <p><strong>Revenue Blueprint IA</strong> — ton plan personnalisé avec chiffres réalistes estimés</p>
+        </div>
+        <div class="problem-item">
+          <div class="icon good">✓</div>
+          <p><strong>Scripts de pitch générés</strong> — DMs et emails écrits pour chaque type de marque</p>
+        </div>
+        <div class="problem-item">
+          <div class="icon good">✓</div>
+          <p><strong>5+ sources de revenus</strong> — UGC, affiliate, digital products, brand deals, consulting</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section style="background:var(--card-bg);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div class="how">
+    <div class="reveal" style="text-align:center;margin-bottom:64px">
+      <span class="section-tag">Comment ça marche</span>
+      <h2 class="section-title" style="margin:0 auto 16px;text-align:center">4 étapes,<br/>60 secondes.</h2>
+    </div>
+    <div class="steps reveal">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h3>Entre ton @TikTok</h3>
+        <p>Connecte ton profil en un clic. Pas d'accès à ton compte, lecture publique seulement.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h3>Analyse IA instantanée</h3>
+        <p>Notre IA scanne ta niche, ton engagement rate, ton audience démographique et tes performances.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h3>Reçois ton Blueprint</h3>
+        <p>Un plan de monétisation sur mesure avec revenus estimés, priorités et actions concrètes.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <h3>Exécute & génère</h3>
+        <p>Media kit, scripts de pitch, DMs — tout est généré. Il ne reste qu'à envoyer.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LIVE DEMO -->
+<section id="demo" style="padding:100px 48px;background:var(--black)">
+  <div style="max-width:760px;margin:0 auto">
+    <div class="reveal" style="text-align:center;margin-bottom:56px">
+      <span class="section-tag">Démo live</span>
+      <h2 class="section-title" style="margin:0 auto 16px;text-align:center">Teste l'audit<br/><em style="font-style:normal;color:var(--accent)">maintenant.</em></h2>
+      <p style="font-size:18px;color:var(--muted);font-weight:300">Entre un handle — l'IA génère un aperçu simulé basé sur la niche. Dans l'app, tes vraies stats alimentent un audit précis.</p>
+    </div>
+    <div class="reveal" style="border:1px solid var(--border);border-radius:24px;overflow:hidden;background:#060606">
+      <!-- demo top bar -->
+      <div style="display:flex;align-items:center;gap:8px;padding:14px 20px;background:#0d0d0c;border-bottom:1px solid var(--border)">
+        <div style="width:11px;height:11px;border-radius:50%;background:#FF5F57"></div>
+        <div style="width:11px;height:11px;border-radius:50%;background:#FFBD2E"></div>
+        <div style="width:11px;height:11px;border-radius:50%;background:#28C840"></div>
+        <span style="margin-left:10px;font-size:12px;color:var(--muted);letter-spacing:.5px">creatorpay.ai · audit live</span>
+      </div>
+      <div id="demo-app" style="min-height:440px"></div>
+    </div>
+  </div>
+</section>
+
+<style>
+/* ── DEMO SCOPED STYLES ── */
+#demo-app{color:#F5F0E8;font-family:'DM Sans',sans-serif;font-size:15px}
+.d-screen-input{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:52px 32px;text-align:center;gap:0;position:relative;overflow:hidden}
+.d-screen-input::before{content:'';position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(200,241,53,.07) 0%,transparent 65%);top:50%;left:50%;transform:translate(-50%,-55%);pointer-events:none}
+.d-headline{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(28px,5vw,44px);letter-spacing:-1.5px;line-height:1.05;margin-bottom:12px}
+.d-headline em{font-style:normal;color:#C8F135}
+.d-sub{font-size:16px;color:#888884;font-weight:300;margin-bottom:36px;max-width:360px}
+.d-row{display:flex;width:100%;max-width:400px;border:1px solid #252523;border-radius:100px;background:#111110;overflow:hidden;transition:border-color .25s}
+.d-row:focus-within{border-color:rgba(200,241,53,.5)}
+.d-at{padding:0 0 0 20px;display:flex;align-items:center;font-size:17px;font-weight:500;color:#888884;flex-shrink:0}
+.d-row input{flex:1;background:transparent;border:none;outline:none;padding:15px 10px;font-family:'DM Sans',sans-serif;font-size:16px;color:#F5F0E8;min-width:0}
+.d-row input::placeholder{color:#888884}
+.d-row button{background:#C8F135;color:#060606;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;font-size:15px;padding:0 24px;transition:background .2s;white-space:nowrap;flex-shrink:0;border-radius:0}
+.d-row button:hover{background:#d8ff50}
+.d-row button:disabled{opacity:.5;cursor:not-allowed}
+.d-note{font-size:12px;color:#888884;margin-top:14px}
+.d-samples{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap;justify-content:center}
+.d-sample{padding:6px 14px;border-radius:100px;border:1px solid #252523;background:transparent;color:#888884;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.d-sample:hover{border-color:#C8F135;color:#C8F135}
+/* loading */
+.d-loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 32px;min-height:440px;text-align:center;gap:24px}
+.d-loading-title{font-family:'Syne',sans-serif;font-weight:800;font-size:24px;letter-spacing:-.8px}
+.d-loading-title em{font-style:normal;color:#C8F135}
+.d-steps{width:100%;max-width:320px;display:flex;flex-direction:column;gap:10px}
+.d-step{display:flex;align-items:center;gap:12px;padding:11px 16px;border-radius:12px;background:#111110;border:1px solid #252523;transition:all .4s}
+.d-step.active{border-color:rgba(200,241,53,.3);background:rgba(200,241,53,.04)}
+.d-step.done{border-color:#252523}
+.d-step-ico{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
+.d-step-ico.idle{background:#1a1a18;color:#888884}
+.d-step-ico.spin{background:rgba(200,241,53,.15);color:#C8F135;animation:dspin .8s linear infinite}
+.d-step-ico.ok{background:rgba(200,241,53,.2);color:#C8F135}
+.d-step-lbl{font-size:13px;color:#888884}
+.d-step.active .d-step-lbl{color:#F5F0E8}
+@keyframes dspin{to{transform:rotate(360deg)}}
+/* results */
+.d-results{padding:24px;display:flex;flex-direction:column;gap:16px;animation:dfadeUp .5s ease}
+@keyframes dfadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.d-header{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.d-score-circle{width:88px;height:88px;border-radius:50%;border:2px solid #252523;background:#111110;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0}
+.d-score-num{font-family:'Syne',sans-serif;font-weight:800;font-size:26px;color:#C8F135;letter-spacing:-1px;line-height:1}
+.d-score-den{font-size:11px;color:#888884;margin-top:2px}
+.d-title-block{flex:1}
+.d-handle{font-family:'Syne',sans-serif;font-weight:800;font-size:22px;letter-spacing:-.8px;margin-bottom:4px}
+.d-handle em{font-style:normal;color:#C8F135}
+.d-niche{display:inline-block;padding:4px 12px;border-radius:100px;background:rgba(200,241,53,.12);border:1px solid rgba(200,241,53,.2);color:#C8F135;font-size:12px;font-weight:500;margin-bottom:4px}
+.d-followers{font-size:13px;color:#888884}
+.d-reset{margin-left:auto;padding:7px 16px;border-radius:100px;border:1px solid #252523;background:transparent;color:#888884;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;align-self:flex-start}
+.d-reset:hover{border-color:#F5F0E8;color:#F5F0E8}
+.d-g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:560px){.d-g2{grid-template-columns:1fr}}
+.d-card{background:#111110;border:1px solid #252523;border-radius:14px;padding:18px}
+.d-card-title{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#888884;font-weight:500;margin-bottom:14px}
+.d-aud-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.d-aud-item{background:#1a1a18;border-radius:8px;padding:10px 12px}
+.d-aud-val{font-family:'Syne',sans-serif;font-weight:700;font-size:20px;letter-spacing:-.3px;color:#F5F0E8}
+.d-aud-val em{font-style:normal;color:#C8F135}
+.d-aud-key{font-size:11px;color:#888884;margin-top:1px}
+.d-checks{display:flex;flex-direction:column;gap:7px}
+.d-check{display:flex;align-items:flex-start;gap:8px;font-size:12px;line-height:1.5;color:#888884}
+.d-check strong{color:#F5F0E8;font-weight:500}
+.d-ci{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;flex-shrink:0;margin-top:1px}
+.d-ci.yes{background:rgba(200,241,53,.15);color:#C8F135}
+.d-ci.no{background:rgba(255,77,77,.12);color:#FF4D4D}
+.d-rev-card{grid-column:1/-1}
+.d-rev-total{display:flex;align-items:baseline;gap:6px;margin-bottom:16px}
+.d-rev-total-num{font-family:'Syne',sans-serif;font-weight:800;font-size:34px;color:#C8F135;letter-spacing:-1.5px}
+.d-rev-total-lbl{font-size:13px;color:#888884;font-weight:300}
+.d-rev-row{margin-bottom:12px}
+.d-rev-rh{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
+.d-rev-src{font-size:13px;font-weight:500}
+.d-rev-range{font-size:12px;color:#C8F135}
+.d-rev-diff{font-size:11px;padding:2px 8px;border-radius:100px;background:#1a1a18;color:#888884}
+.d-bar-bg{height:5px;background:#1a1a18;border-radius:3px;overflow:hidden}
+.d-bar{height:100%;background:#C8F135;border-radius:3px;transition:width 1s ease;width:0}
+.d-reco{grid-column:1/-1;border-color:rgba(200,241,53,.2);background:linear-gradient(135deg,#111110,#141410)}
+.d-reco-txt{font-size:14px;line-height:1.7;color:#F5F0E8;margin-bottom:14px}
+.d-reco-btn{display:inline-block;background:#C8F135;color:#060606;font-family:'DM Sans',sans-serif;font-weight:500;font-size:14px;padding:11px 26px;border-radius:100px;cursor:pointer;border:none;transition:background .2s,transform .2s}
+.d-reco-btn:hover{background:#d8ff50;transform:scale(1.03)}
+.d-err{color:#FF4D4D;font-size:13px;text-align:center;padding:8px 16px;background:rgba(255,77,77,.08);border-radius:8px;border:1px solid rgba(255,77,77,.18);margin-top:10px;max-width:400px}
+.d-sim-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:100px;border:1px solid rgba(200,241,53,.2);background:rgba(200,241,53,.06);color:#888884;font-size:11px;font-weight:500;letter-spacing:.5px;text-transform:uppercase;margin-bottom:20px}
+.d-sim-badge em{font-style:normal;color:#C8F135}
+.d-sim-disclaimer{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-radius:10px;background:rgba(200,241,53,.05);border:1px solid rgba(200,241,53,.12);font-size:12px;color:#888884;line-height:1.55;margin-top:4px}
+.d-sim-disclaimer strong{color:#C8F135;font-weight:500}
+</style>
+
+<script>
+(function(){
+const DSAMPLES=['mia.lifestyle','tomkitchen','sarafit','lucas.sneakers','zoepastry'];
+const DSTEPS=['Détection de niche via le handle','Estimation de l\'audience type','Calcul du Blueprint estimé','Génération des recommandations'];
+let ds={screen:'input',handle:'',step:0,audit:null,err:null};
+
+function dfmt(n){return '$'+n.toLocaleString()}
+
+function drender(){
+  const el=document.getElementById('demo-app');
+  if(!el)return;
+  if(ds.screen==='input') el.innerHTML=dinput();
+  else if(ds.screen==='loading') el.innerHTML=dloading();
+  else if(ds.screen==='results') el.innerHTML=dresults();
+  dbind();
+}
+
+function dinput(){
+  return`<div class="d-screen-input">
+    <div class="d-sim-badge">✦ <em>Démo</em> · simulation niche</div>
+    <h2 class="d-headline">À quoi ressemble<br/>ton <em>audit ?</em></h2>
+    <p class="d-sub">Entre un handle — l'IA génère un aperçu basé sur la niche détectée dans le nom. Dans l'app, tu entres tes vraies stats.</p>
+    <div class="d-row">
+      <span class="d-at">@</span>
+      <input id="dInp" type="text" placeholder="tonhandle" value="${ds.handle}" autocomplete="off" spellcheck="false"/>
+      <button id="dBtn">Voir l'aperçu →</button>
+    </div>
+    ${ds.err?`<div class="d-err">${ds.err}</div>`:''}
+    <p class="d-note">Simulation · pas de connexion TikTok · chiffres estimés par IA</p>
+    <div class="d-samples">${DSAMPLES.map(s=>`<button class="d-sample" data-s="${s}">@${s}</button>`).join('')}</div>
+  </div>`;
+}
+
+function dloading(){
+  return`<div class="d-loading">
+    <div class="d-loading-title">Simulation pour <em>@${ds.handle}</em></div>
+    <div class="d-steps">${DSTEPS.map((s,i)=>{
+      let c=i<ds.step?'done':i===ds.step?'active':'';
+      let ico=i<ds.step?'✓':i===ds.step?'◌':'·';
+      let ic=i<ds.step?'ok':i===ds.step?'spin':'idle';
+      return`<div class="d-step ${c}"><div class="d-step-ico ${ic}">${ico}</div><span class="d-step-lbl">${s}</span></div>`;
+    }).join('')}</div>
+  </div>`;
+}
+
+function dresults(){
+  const a=ds.audit;
+  const mx=Math.max(...a.revenue_blueprint.map(r=>r.max));
+  return`<div class="d-results">
+    <div class="d-header">
+      <div class="d-score-circle"><span class="d-score-num" id="dScoreNum">0</span><span class="d-score-den">/100 est.</span></div>
+      <div class="d-title-block">
+        <div class="d-niche">${a.niche}</div>
+        <div class="d-handle">@<em>${a.handle}</em></div>
+        <div class="d-followers">${a.followers_estimate} followers estimés · Engagement ${a.engagement_rate}%</div>
+      </div>
+      <button class="d-reset" id="dReset">↩ Retour</button>
+    </div>
+    <div class="d-sim-disclaimer">ℹ️ <span><strong>Aperçu simulé</strong> — chiffres estimés par IA selon la niche. <strong>Dans l'app</strong>, tu entres tes vraies stats pour un audit précis.</span></div>
+    <div class="d-g2">
+      <div class="d-card">
+        <div class="d-card-title">Audience</div>
+        <div class="d-aud-grid">
+          <div class="d-aud-item"><div class="d-aud-val"><em>${a.audience.age_pct}%</em></div><div class="d-aud-key">${a.audience.age_main} ans</div></div>
+          <div class="d-aud-item"><div class="d-aud-val"><em>${a.audience.female_pct}%</em></div><div class="d-aud-key">Audience féminine</div></div>
+          <div class="d-aud-item"><div class="d-aud-val">${a.engagement_rate}<span style="font-size:13px;color:#888884">%</span></div><div class="d-aud-key">Engagement</div></div>
+          <div class="d-aud-item"><div class="d-aud-val" style="font-size:13px">${a.audience.top_country}</div><div class="d-aud-key">Marché #1</div></div>
+        </div>
+      </div>
+      <div class="d-card">
+        <div class="d-card-title">Forces & axes</div>
+        <div class="d-checks">
+          ${a.strengths.map(s=>`<div class="d-check"><div class="d-ci yes">✓</div><span><strong>${s.title}</strong> — ${s.desc}</span></div>`).join('')}
+          ${a.improvements.map(s=>`<div class="d-check"><div class="d-ci no">!</div><span><strong>${s.title}</strong> — ${s.desc}</span></div>`).join('')}
+        </div>
+      </div>
+      <div class="d-card d-rev-card">
+        <div class="d-card-title">Revenue Blueprint — potentiel estimé / mois</div>
+        <div class="d-rev-total"><span class="d-rev-total-num" id="dRevNum">$0</span><span class="d-rev-total-lbl">/ mois potentiel total</span></div>
+        ${a.revenue_blueprint.map((r,i)=>`<div class="d-rev-row">
+          <div class="d-rev-rh">
+            <span class="d-rev-src">${r.source}</span>
+            <div style="display:flex;gap:6px;align-items:center">
+              <span class="d-rev-diff">${r.difficulty}</span>
+              <span class="d-rev-range">${dfmt(r.min)}–${dfmt(r.max)}</span>
+            </div>
+          </div>
+          <div class="d-bar-bg"><div class="d-bar" id="dbar${i}" data-w="${Math.round(r.max/mx*100)}"></div></div>
+        </div>`).join('')}
+      </div>
+      <div class="d-card d-reco">
+        <div class="d-card-title">Recommandation prioritaire</div>
+        <p class="d-reco-txt">${a.top_recommendation}</p>
+        <button class="d-reco-btn" onclick="document.getElementById('emailInput').scrollIntoView({behavior:'smooth'});setTimeout(()=>document.getElementById('emailInput').focus(),600)">Créer mon compte gratuit →</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function danimateResults(){
+  const a=ds.audit;
+  let s=0;const sEl=document.getElementById('dScoreNum');
+  const si=setInterval(()=>{s=Math.min(s+2,a.score);if(sEl)sEl.textContent=s;if(s>=a.score)clearInterval(si)},18);
+  setTimeout(()=>{
+    let v=0;const tot=a.total_max;const rEl=document.getElementById('dRevNum');
+    const step=Math.ceil(tot/60);
+    const ri=setInterval(()=>{v=Math.min(v+step,tot);if(rEl)rEl.textContent='$'+v.toLocaleString();if(v>=tot)clearInterval(ri)},18);
+  },300);
+  setTimeout(()=>{document.querySelectorAll('.d-bar').forEach(b=>{b.style.width=b.dataset.w+'%'})},400);
+}
+
+function dbind(){
+  if(ds.screen==='input'){
+    const inp=document.getElementById('dInp');
+    inp?.addEventListener('keydown',e=>{if(e.key==='Enter')dstart()});
+    inp?.addEventListener('input',e=>{ds.handle=e.target.value.replace('@','').trim()});
+    document.getElementById('dBtn')?.addEventListener('click',dstart);
+    document.querySelectorAll('.d-sample').forEach(b=>b.addEventListener('click',()=>{ds.handle=b.dataset.s;dstart()}));
+  }
+  if(ds.screen==='results'){
+    document.getElementById('dReset')?.addEventListener('click',()=>{ds={screen:'input',handle:'',step:0,audit:null,err:null};drender()});
+    danimateResults();
+  }
+}
+
+async function dstart(){
+  const h=ds.handle.trim().replace('@','');
+  if(!h){ds.err='Entre un handle TikTok valide.';drender();return;}
+  ds.err=null;ds.handle=h;ds.screen='loading';ds.step=0;drender();
+  const t=setInterval(()=>{ds.step=Math.min(ds.step+1,3);drender()},900);
+  const prompt=`Tu es expert en monétisation TikTok. Génère un audit réaliste pour "@${h}". Retourne UNIQUEMENT du JSON valide, sans texte autour ni backticks, en français :
+{"handle":"${h}","score":<int 45-92>,"niche":"<2-3 mots>","followers_estimate":"<ex:~45k>","engagement_rate":<float 2.5-9.5>,"audience":{"age_main":"<ex:18-24>","age_pct":<int 45-72>,"female_pct":<int 40-75>,"top_country":"<pays>"},"strengths":[{"title":"<2-3 mots>","desc":"<phrase courte>"},{"title":"<2-3 mots>","desc":"<phrase courte>"},{"title":"<2-3 mots>","desc":"<phrase courte>"}],"improvements":[{"title":"<2-3 mots>","desc":"<phrase courte>"},{"title":"<2-3 mots>","desc":"<phrase courte>"}],"revenue_blueprint":[{"source":"UGC Creators","min":<int>,"max":<int>,"difficulty":"Facile"},{"source":"Brand Deals","min":<int>,"max":<int>,"difficulty":"Moyen"},{"source":"Affiliation","min":<int>,"max":<int>,"difficulty":"Facile"},{"source":"Produits digitaux","min":<int>,"max":<int>,"difficulty":"Moyen"},{"source":"Coaching","min":<int>,"max":<int>,"difficulty":"Difficile"}],"total_min":<somme min>,"total_max":<somme max>,"top_recommendation":"<2-3 phrases concrètes personnalisées selon la niche détectée dans ${h}, avec action précise cette semaine>"}
+Déduis niche/audience du handle. Chiffres réalistes pour créateur francophone.`;
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})});
+    clearInterval(t);ds.step=4;drender();
+    const data=await res.json();
+    const txt=data.content?.find(b=>b.type==='text')?.text||'';
+    const audit=JSON.parse(txt.replace(/```json|```/g,'').trim());
+    setTimeout(()=>{ds.screen='results';ds.audit=audit;drender()},400);
+  }catch(e){
+    clearInterval(t);ds.screen='input';ds.err='Erreur lors de l\'analyse. Réessaie.';drender();
+  }
+}
+
+drender();
+})();
+</script>
+
+<!-- FEATURES -->
+<section>
+  <div class="features">
+    <div class="reveal">
+      <span class="section-tag">Fonctionnalités</span>
+      <h2 class="section-title">Tout ce dont<br/>tu as besoin.</h2>
+      <p class="section-sub">4 outils IA. Zéro bullshit. 100% orienté résultats.</p>
+    </div>
+    <div class="features-grid reveal">
+
+      <!-- FEATURED -->
+      <div class="feature-card featured">
+        <div>
+          <div class="feature-icon">🔍</div>
+          <h3>Profile Audit</h3>
+          <p>Notre IA analyse en profondeur ton compte TikTok — engagement rate, qualité d'audience, cohérence de niche, potentiel commercial. Tu reçois un score sur 100 et une liste d'améliorations priorisées.</p>
+          <div class="feature-tags">
+            <span class="tag">Score / 100</span>
+            <span class="tag">Analyse niche</span>
+            <span class="tag">Audience insights</span>
+            <span class="tag">Red flags détectés</span>
+          </div>
+        </div>
+        <div class="mock-preview">
+          <div class="mock-bar">
+            <div class="mock-dot" style="background:#FF5F57"></div>
+            <div class="mock-dot" style="background:#FFBD2E"></div>
+            <div class="mock-dot" style="background:#28C840"></div>
+          </div>
+          <div class="mock-content">
+            <div style="font-size:12px;color:var(--muted);margin-bottom:16px;letter-spacing:1px;text-transform:uppercase">@yourhandle · Audit result</div>
+            <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:24px">
+              <span style="font-family:'Syne',sans-serif;font-weight:800;font-size:56px;color:var(--accent);letter-spacing:-2px">74</span>
+              <span style="font-size:18px;color:var(--muted)">/100</span>
+            </div>
+            <div class="mock-row"><span class="mock-label">Engagement rate</span><span class="mock-val green">6.8% ↑</span></div>
+            <div class="mock-row"><span class="mock-label">Cohérence niche</span><span class="mock-val green">Forte</span></div>
+            <div class="mock-row"><span class="mock-label">Audience 18-24</span><span class="mock-val">62%</span></div>
+            <div class="mock-row"><span class="mock-label">Potentiel brand deals</span><span class="mock-val green">Élevé</span></div>
+            <div class="mock-progress"><div class="mock-progress-bar" style="--w:74%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">💰</div>
+        <h3>Revenue Blueprint</h3>
+        <p>Basé sur ton profil, l'IA calcule ton potentiel de revenus réel par source : UGC, affiliate, digital products, brand deals, consulting. Avec des fourchettes de rémunération de marché.</p>
+        <div class="feature-tags">
+          <span class="tag">5+ sources de revenus</span>
+          <span class="tag">Chiffres estimés</span>
+          <span class="tag">Plan d'action</span>
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📄</div>
+        <h3>Media Kit Generator</h3>
+        <p>Génère un PDF professionnel en 2 clics, prêt à envoyer aux marques. Stats mises à jour automatiquement, design clean, tarifs pré-remplis selon les standards du marché.</p>
+        <div class="feature-tags">
+          <span class="tag">Export PDF</span>
+          <span class="tag">Design pro</span>
+          <span class="tag">Auto-updated</span>
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">✉️</div>
+        <h3>Brand Deal Pitch AI</h3>
+        <p>Entre le nom de la marque, l'IA écrit le DM ou email de prospection parfait — personnalisé selon ta niche, leur secteur, et les standards de collab du marché. Taux de réponse x3.</p>
+        <div class="feature-tags">
+          <span class="tag">DM TikTok</span>
+          <span class="tag">Email formel</span>
+          <span class="tag">Personnalisé par marque</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section style="background:var(--card-bg);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div class="testimonials">
+    <div class="reveal" style="text-align:center;margin-bottom:64px">
+      <span class="section-tag">Beta testers</span>
+      <h2 class="section-title" style="margin:0 auto;text-align:center">Ils ont testé<br/>en avant-première.</h2>
+    </div>
+    <div class="testi-grid reveal">
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <blockquote>J'avais <em>87k abonnés</em> et je ne gagnais presque rien. Le Revenue Blueprint m'a montré que j'avais un potentiel UGC de $2,400/mois. En 3 semaines j'ai signé mon premier contrat.</blockquote>
+        <div class="testi-author">
+          <div class="testi-avatar">ML</div>
+          <div>
+            <div class="testi-name">Margot L.</div>
+            <div class="testi-meta">@margot.lifestyle · 87k followers</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <blockquote>Le media kit généré est <em>tellement plus professionnel</em> que ce que je faisais sur Canva. Les marques répondent maintenant. Ça m'a sauvé des heures de mise en forme.</blockquote>
+        <div class="testi-author">
+          <div class="testi-avatar">TK</div>
+          <div>
+            <div class="testi-name">Tom K.</div>
+            <div class="testi-meta">@tomkitchen · 120k followers</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <blockquote>Les <em>scripts de pitch IA</em> sont bluffants. Je n'aurais jamais écrit ça moi-même. Premier brand deal signé 9 jours après avoir utilisé l'outil. Sérieusement.</blockquote>
+        <div class="testi-author">
+          <div class="testi-avatar">SA</div>
+          <div>
+            <div class="testi-name">Sara A.</div>
+            <div class="testi-meta">@sarafit.official · 34k followers</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section>
+  <div class="pricing-wrap">
+    <div class="reveal" style="text-align:center;margin-bottom:48px">
+      <span class="section-tag">Tarifs</span>
+      <h2 class="section-title" style="margin:0 auto 16px;text-align:center">Simple.<br/>Transparent.</h2>
+      <p style="color:var(--muted);font-size:17px">Tu paies si tu gagnes. Sinon, tu gardes le free.</p>
+    </div>
+    <div class="pricing-toggle reveal">
+      <button class="active" id="btnMonthly" onclick="setPricing('monthly')">Mensuel</button>
+      <button id="btnAnnual" onclick="setPricing('annual')">Annuel <span class="badge-save">–35%</span></button>
+    </div>
+    <div class="pricing-grid reveal">
+      <div class="price-card">
+        <div class="price-name">Free</div>
+        <div class="price-amount"><sup>$</sup>0<small>/mois</small></div>
+        <p class="price-desc">Pour découvrir CreatorPay et tester le concept.</p>
+        <ul class="price-features">
+          <li><span class="check yes">✓</span> 1 audit profil / mois</li>
+          <li><span class="check yes">✓</span> Revenue Blueprint basique</li>
+          <li><span class="check yes">✓</span> 1 media kit téléchargeable</li>
+          <li><span class="check no">–</span> <span style="color:var(--muted)">Brand Deal Pitch IA</span></li>
+          <li><span class="check no">–</span> <span style="color:var(--muted)">Audits illimités</span></li>
+          <li><span class="check no">–</span> <span style="color:var(--muted)">Suivi des revenus</span></li>
+        </ul>
+        <button class="price-btn" onclick="handleWaitlist()">Commencer gratuitement</button>
+      </div>
+      <div class="price-card pro">
+        <span class="pro-badge">Populaire</span>
+        <div class="price-name">Pro</div>
+        <div class="price-amount" id="proPrice"><sup>$</sup>19<small>/mois</small></div>
+        <p class="price-desc">Pour les créateurs sérieux qui veulent monétiser maintenant.</p>
+        <ul class="price-features">
+          <li><span class="check yes">✓</span> Audits illimités</li>
+          <li><span class="check yes">✓</span> Revenue Blueprint complet (5 sources)</li>
+          <li><span class="check yes">✓</span> Media kits illimités</li>
+          <li><span class="check yes">✓</span> Brand Deal Pitch IA illimité</li>
+          <li><span class="check yes">✓</span> Suivi de revenus & tableau de bord</li>
+          <li><span class="check yes">✓</span> Support prioritaire</li>
+        </ul>
+        <button class="price-btn pro-btn" onclick="handleWaitlist()">Rejoindre la waitlist Pro →</button>
+      </div>
+    </div>
+    <p class="reveal" style="text-align:center;font-size:14px;color:var(--muted);margin-top:28px">Accès beta gratuit pendant 30 jours · Aucune carte requise · Résiliable à tout moment</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section style="background:var(--card-bg);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div class="faq-wrap">
+    <div class="reveal" style="text-align:center;margin-bottom:56px">
+      <span class="section-tag">FAQ</span>
+      <h2 class="section-title" style="margin:0 auto;text-align:center">Questions fréquentes.</h2>
+    </div>
+    <div class="faq-wrap reveal">
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Faut-il un grand nombre de followers pour utiliser CreatorPay ? <span class="ico">+</span></div>
+        <div class="faq-a">Non. CreatorPay est optimisé pour les créateurs entre 5k et 500k followers — la zone où la monétisation est la plus accessible mais la moins exploitée. En dessous de 5k, le potentiel brand deal reste limité, mais l'outil reste utile pour préparer ta croissance.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Est-ce que vous avez accès à mon compte TikTok ? <span class="ico">+</span></div>
+        <div class="faq-a">Non. Nous n'utilisons que les données publiques de ton profil (nombre de followers, engagement visible, description, niche). Tu n'as jamais besoin de te connecter avec TikTok ni de partager un mot de passe.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Les revenus estimés dans le Blueprint sont-ils garantis ? <span class="ico">+</span></div>
+        <div class="faq-a">Non — et on serait malhonnêtes de dire le contraire. Le Blueprint est basé sur des benchmarks réels du marché pour chaque niche et chaque tranche de followers. C'est une estimation de potentiel réaliste, pas une promesse. Tes résultats dépendent aussi de ta régularité et de ton exécution.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Ça marche uniquement pour TikTok ? <span class="ico">+</span></div>
+        <div class="faq-a">Pour le lancement, oui — TikTok est notre focus. Les intégrations Instagram Reels et YouTube Shorts sont prévues dans les mois suivants selon les retours de la communauté beta.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Comment fonctionne la période d'accès beta gratuit ? <span class="ico">+</span></div>
+        <div class="faq-a">En rejoignant la waitlist, tu auras un accès complet aux fonctionnalités Pro pendant 30 jours, gratuitement. Aucune carte bancaire demandée à l'inscription. À la fin des 30 jours, tu choisis si tu continues en Pro ou tu passes au Free.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="cta-section">
+  <h2>Arrête de laisser<br/>de l'argent <em>dormir.</em></h2>
+  <p>Rejoins les créateurs qui transforment leur audience en revenus — dès aujourd'hui.</p>
+  <button class="cta-big" onclick="document.getElementById('emailInput').scrollIntoView({behavior:'smooth'});setTimeout(()=>document.getElementById('emailInput').focus(),600)">
+    Commencer gratuitement →
+  </button>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="logo">Creator<span>Pay</span></a>
+  <p>© 2026 CreatorPay · Tous droits réservés</p>
+  <p style="font-size:13px;color:var(--muted)">Fait avec ✦ pour les créateurs</p>
+</footer>
+
+<script>
+  // NAV scroll
+  window.addEventListener('scroll',()=>{
+    document.getElementById('nav').classList.toggle('scrolled',scrollY>40)
+  })
+
+  // Reveal on scroll
+  const revealEls=document.querySelectorAll('.reveal')
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible')}})
+  },{threshold:.1})
+  revealEls.forEach(el=>obs.observe(el))
+
+  // Waitlist
+  // ── LOOPS.SO INTEGRATION ──
+  // 1. Créer un compte sur loops.so
+  // 2. Settings → API → créer une clé API
+  // 3. Forms → New Form → copier le Form ID
+  // 4. Remplacer LOOPS_FORM_ID ci-dessous par ton vrai ID
+  const LOOPS_FORM_ID = 'LOOPS_FORM_ID'; // 👈 remplacer ici
+
+  async function handleWaitlist(){
+    const input = document.getElementById('emailInput');
+    const email = input.value.trim();
+    const btn = document.querySelector('.waitlist-form button');
+    if(!email || !email.includes('@')){ input.style.borderColor='#FF4545'; return; }
+    input.style.borderColor='';
+
+    // UI loading state
+    btn.textContent = '...';
+    btn.disabled = true;
+    input.disabled = true;
+
+    try {
+      const res = await fetch(`https://app.loops.so/api/newsletter-form/${LOOPS_FORM_ID}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ email })
+      });
+      const data = await res.json();
+      if(data.success){
+        document.querySelector('.waitlist-form').style.display='none';
+        document.getElementById('successMsg').classList.add('show');
+      } else {
+        throw new Error(data.message || 'Erreur');
+      }
+    } catch(err) {
+      // Fallback : afficher succès quand Loops pas encore configuré
+      if(LOOPS_FORM_ID === 'LOOPS_FORM_ID'){
+        document.querySelector('.waitlist-form').style.display='none';
+        document.getElementById('successMsg').classList.add('show');
+        console.warn('[CreatorPay] Loops pas encore configuré — email non sauvegardé.');
+      } else {
+        btn.textContent = 'Réessayer →';
+        btn.disabled = false;
+        input.disabled = false;
+        input.style.borderColor = '#FF4545';
+      }
+    }
+  }
+  document.getElementById('emailInput').addEventListener('keydown',e=>{
+    if(e.key==='Enter')handleWaitlist()
+  })
+  // Reset border on input
+  document.getElementById('emailInput').addEventListener('input',()=>{
+    document.getElementById('emailInput').style.borderColor='';
+  })
+
+  // Pricing toggle
+  function setPricing(mode){
+    document.getElementById('btnMonthly').classList.toggle('active',mode==='monthly')
+    document.getElementById('btnAnnual').classList.toggle('active',mode==='annual')
+    const el=document.getElementById('proPrice')
+    el.innerHTML=mode==='monthly'
+      ?'<sup>$</sup>19<small>/mois</small>'
+      :'<sup>$</sup>12<small>/mois</small>'
+  }
+
+  // FAQ
+  function toggleFaq(item){
+    const isOpen=item.classList.contains('open')
+    document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'))
+    if(!isOpen)item.classList.add('open')
+  }
+</script>
+</body>
+</html>
